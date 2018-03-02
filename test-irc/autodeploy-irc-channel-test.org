@@ -1,0 +1,82 @@
+#+Title: Documentation on Installation of Supybot 
+#+Author: Sravanthi. M
+#+Date: 04-09-2017
+
+* Introduction
+  This document contains the installation and configuration of Supybot for IRC channel to log the messages.
+* Supybot
+  Supybot is a robust (it doesn't crash), user friendly (it's easy to
+  configure) and programmer friendly (plugins are extremely easy to
+  write) Python IRC bot. 
+* Installation of Supybot
+** Steps to create a container and add a user 
+  - Create a container on base4 with below command:
+    #+BEGIN_EXAMPLE
+    $ vzctl create 103 --ostemplate ubuntu-14.04-x86_64 --ipadd 10.4.12.103 --hostname autodeploy-irc.vlabs.ac.in 
+    #+END_EXAMPLE
+  - Then start the container as:
+    #+BEGIN_EXAMPLE
+    $ vzctl start 103
+    #+END_EXAMPLE
+  - Enter into the container as :
+    #+BEGIN_EXAMPLE
+    $ vzctl enter 103
+    #+END_EXAMPLE
+  - Add user to the container as
+    #+BEGIN_EXAMPLE
+    $ useradd -m vlead
+    #+END_EXAMPLE
+  - Switch to the user as : 
+    #+BEGIN_EXAMPLE
+    $ sudo su - vlead
+    #+END_EXAMPLE
+** Steps to install Supybot
+   - Set proxy to install supybot with the below commanda:
+     #+BEGIN_SRC 
+     $ export http_proxy="http://proxy.iiit.ac.in:8080"
+     $ export https_proxy="http://proxy.iiit.ac.in:8080"
+     #+END_SRC 
+   - Update te packages to using below command
+     #+BEGIN_SRC  
+     $ sudo apt-get update
+     #+END_SRC 
+   - Command to install supybot
+     #+BEGIN_SRC  
+     $ sudo apt-get install supybot
+     #+END_SRC 
+   - create a folder named supybot in home directory
+     #+BEGIN_SRC 
+     $ cd ~
+     $ mkdir supybot
+     $ cd supybot
+     #+END_SRC 
+** Implementation
+   #+BEGIN_SRC  bat : exports both :tangle "automation.sh"
+# !/bin/env bash
+# -*- mode: shell-script -*-
+
+   export http_proxy="http://proxy.iiit.ac.in:8080"
+   export https_proxy="http://proxy.iiit.ac.in:8080"
+   sudo apt-get update
+   sudo apt-get install supybot
+   cd ~
+   mkdir supybot
+   cd supybot
+   supybot-wizard
+
+   #+END_SRC
+
+** Configure the Supybot-wizard
+   1) Supybot-wizard is to setup network, server, bot nickname, logs, plugins etc.,.
+   2) A file is created with  <bot-name>.conf after the configuration.
+      #+BEGIN_SRC  
+      $ supybot <configurationfile>.conf
+      #+END_SRC 
+   3) This programme will connect you to the configured IRC
+      channels. And now you are able to see the bot logged into
+      the IRC channel with botname that you specified during
+      configuration. (Check once by log into the IRC channel) 
+   4) If you could see bot logged into the specified IRC channles that
+      means you are succesfully configured bot for your channels.
+
+
